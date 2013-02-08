@@ -26,6 +26,12 @@ package com.sababado.utils;
  */
 public interface Loading
 {
+	/**
+	 * Call this method to show a loading indicator if not already showing.
+	 */
 	public void showLoading();
+	/**
+	 * call this method to hide a loading indicator if showing.
+	 */
 	public void hideLoading();
 }
