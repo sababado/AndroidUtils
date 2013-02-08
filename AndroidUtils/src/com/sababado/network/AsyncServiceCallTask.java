@@ -41,10 +41,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * <p>This implementation of an AsyncTask is to help make service calls convenient and easy.
- * <br/>Supply an implementation of a <code>AsyncServiceListener</code> as a callback. It's appropriate functions will be called when there is either a service call failure or success.
+ * <p>This implementation of an {@link AsyncTask} is to help make service calls convenient and easy.
+ * <br/>Supply an implementation of a {@link AsyncServiceListener} as a callback. It's appropriate functions will be called when there is either a service call failure or success.
  * </p>
- * <p><b>Logging statements are off by default and can be turned off by calling</b> <code>setLogLevel(AsyncServiceCallTask.LOGGING_OFF);</code></p>
+ * <p><b>Logging statements are off by default and can be turned off by calling</b> {@link AsyncServiceCallTask#setLogLevel(int) setLogLevel(AsyncServiceCallTask.LOGGING_OFF);}</p>
  * @author Robert J. Szabo
  * @version 1.1
  * @since 8/30/2012
@@ -81,15 +81,15 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	 */
 	public static final int ERR_CODE_MAX_ATTEMPTS_REACHED = 11;
 	/**
-	 * Error code corresponding to an <code>IllegalStateException</code> when parsing the response.
+	 * Error code corresponding to an {@link IllegalStateException} when parsing the response.
 	 */
 	public static final int ERR_CODE_PARSE_ILLEGAL_STATE = 12;
 	/**
-	 * Error code corresponding to an <code>IOException</code> when parsing the response
+	 * Error code corresponding to an {@link IOException} when parsing the response
 	 */
 	public static final int ERR_CODE_PARSE_IOEXCEPTION = 13;
 	/**
-	 * Error code corresponding to a <code>XmlPullParserException</code> when parsing the response.
+	 * Error code corresponding to a {@link XmlPullParserException} when parsing the response.
 	 */
 	public static final int ERR_CODE_XML_PULLPARSER_EXCEPTION = 14;
 	/**
@@ -127,10 +127,10 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	private static int mLogLevel = LOGGING_OFF;
 	
 	/**
-	 * Set a log level so that this AsyncServicCallTask can determine which logs should be allowed.
+	 * Set a log level so that this {@link AsyncServiceCallTask} can determine which logs should be allowed.
 	 * @param logLevel
 	 */
-	public void setLogLevel(int logLevel)
+	public static void setLogLevel(int logLevel)
 	{
 		if(logLevel != LOGGING_OFF && logLevel != LOGGING_ON_ALL)
 			throw new RuntimeException("Inappropriate use of log level. Use an AsyncServiceCallTask.LOGGING_* constant");
@@ -153,7 +153,7 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	
 	/**
 	 * Initialize this async task with a callback listener, a service to execute, and the invoking context and a maximum number of attempts that this task should try.
-	 * @param asyncServiceListener Callback Listener for this task
+	 * @param asyncServiceListener {@link AsyncServiceListener} for this task
 	 * @param service Service to execute
 	 * @param ctx Invoking context
 	 * @param maxAutoRetryAttempts Max number of attempts
@@ -346,7 +346,7 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	}
 	
 	/**
-	 * Log debug points if the log level allows it. Use <code>setLogLevel()</code> to change the log level.
+	 * Log debug points if the log level allows it. Use {@link AsyncServiceCallTask#setLogLevel(int)} to change the log level.
 	 * @param message
 	 */
 	private void log(int logLevel, String message)

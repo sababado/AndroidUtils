@@ -17,11 +17,13 @@
 package com.sababado.network;
 
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 
 
 /**
- * A class must implement this interface to receive callbacks from an <code>AsyncServiceCallTask</code>.
+ * A class must implement this interface to receive callbacks from an {@link AsyncServiceCallTask}.
  * @author Robert J. Szabo
  * @since 08/27/2012
  * @version 1.0
@@ -29,20 +31,20 @@ import android.os.Bundle;
 public interface AsyncServiceListener
 {
 	/**
-	 * Call back for when the <code>AsyncServiceCallTask</code> wants to relay progress updates about the service call.
+	 * Call back for when the {@link AsyncServiceCallTask} wants to relay progress updates about the service call.
 	 * @param progress An array of strings, or various progress updates.
 	 */
 	public void onServiceCallProgressUpdate(String[] progress);
 	
 	/**
-	 * Call back for when the <code>AsyncServiceCallTask</code> has successfully completed. The service call result object (an <code>ArrayList</code>)
+	 * Call back for when the {@link AsyncServiceCallTask} has successfully completed. The service call result object (an {@link ArrayList})
 	 * can be extracted from the bundle.
 	 * @param success
 	 */
 	public void onServiceCallSuccess(Bundle success);
 	
 	/**
-	 * Call back for when the <code>AsyncServiceCallTask</code> has failed.
+	 * Call back for when the {@link AsyncServiceCallTask} has failed.
 	 * @param errMsg The fail message.
 	 * @param errCode The error code associated with this failure.
 	 */

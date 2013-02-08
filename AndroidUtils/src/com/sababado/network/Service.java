@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParserException;
 
 /**
- * Extend this class to define a service call which will be made by an <code>AsyncServiceCallTask</code>.
+ * Extend this class to define a service call which will be made by an {@link AsyncServiceCallTask}.
  * @author Robert J. Szabo
  * @since 11/21/2012
  * @version 1.1
@@ -48,7 +48,7 @@ public abstract class Service
 	/**
 	 * Initialize the service call with data
 	 * @param url Example: <code>http://www.exampleurl.com/path/to/servicecall</code>
-	 * @param callType Use public int types from the <code>Service</code> class like <code>Service.CALL_TYPE_GET</code>
+	 * @param callType Use public int types from the {@link Service} class like {@link Service#CALL_TYPE_GET}
 	 * @param paramNames an array containing parameter names
 	 * @param paramValues an array containing corresponding parameter values
 	 */
@@ -90,7 +90,7 @@ public abstract class Service
 	}
 	/**
 	 * Set the call type to be used by the service call
-	 * <br/>Example: <code>Service.CALL_TYPE_POST</code>
+	 * <br/>Example: {@link Service#CALL_TYPE_POST}
 	 * @param callType
 	 */
 	public void setCallType(int callType)
@@ -200,8 +200,8 @@ public abstract class Service
 	
 	/**
 	 * Define parsing logic here
-	 * @param is <code>InputStream</code> that contains the successful response from the service call
-	 * @return An <code>ArrayList</code> of any type containing the parsed results.
+	 * @param is {@link InputStream} that contains the successful response from the service call
+	 * @return An {@link ArrayList} of any type containing the parsed results.
 	 * @throws XmlPullParserException
 	 * @throws IOException
 	 */
