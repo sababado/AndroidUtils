@@ -150,6 +150,8 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 */
 	public List<?> getListData()
 	{
+		if(mGenericLists == null)
+			return null;
 		return mGenericLists.mListData;
 	}
 	
