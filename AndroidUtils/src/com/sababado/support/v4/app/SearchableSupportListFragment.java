@@ -422,4 +422,9 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	{
 		onTextChanged(mSearchView.getText().toString());
 	}
+	
+	@Override
+	public boolean isInSearchMode() {
+		return mSearchView.getVisibility() == View.VISIBLE;
+	}
 }

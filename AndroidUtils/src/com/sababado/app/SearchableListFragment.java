@@ -424,4 +424,9 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 	{
 		onTextChanged(mSearchView.getText().toString());
 	}
+
+	@Override
+	public boolean isInSearchMode() {
+		return mSearchView.getVisibility() == View.VISIBLE;
+	}
 }

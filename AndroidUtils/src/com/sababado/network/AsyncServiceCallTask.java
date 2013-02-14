@@ -126,6 +126,9 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	//Used to see which calls should be logged.
 	private static int mLogLevel = LOGGING_OFF;
 	
+	//true if the service call is running, false if not.
+	private boolean mRunning;
+	
 	/**
 	 * Set a log level so that this {@link AsyncServiceCallTask} can determine which logs should be allowed.
 	 * @param logLevel
@@ -169,6 +172,8 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 	@Override
 	protected Bundle doInBackground(Void...args)
 	{
+		mRunning = true;
+		
 		log(LOG_TYPE_DEBUG,"****in AsyncServiceCallTask do in Background");
 		int attempts = 0;
 		
@@ -343,6 +348,7 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 			int errCd = result.getInt(EXTRA_ERR_CODE,ERR_CODE_MISSING_ERR_CODE);
 			mAsyncServiceListener.onServiceCallFailure(errMsg, errCd);
 		}
+		mRunning = false;
 	}
 	
 	/**
@@ -363,5 +369,21 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 			if(logLevel == LOG_TYPE_ERROR)
 				Log.e("AsyncServiceCallTask",message);
 		}
+	}
+	
+	@Override
+	protected void onCancelled() {
+		mRunning = false;
+		super.onCancelled();
+	}
+	
+	/**
+	 * Check if the service call is running or not.
+	 * It would not be running if it has completed {@link AsyncServiceCallTask#onPostExecute(Bundle)} or was canceled.
+	 * @return true if is running, false if not.
+	 */
+	public boolean isRunning()
+	{
+		return mRunning;
 	}
 }

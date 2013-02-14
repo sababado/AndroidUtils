@@ -145,4 +145,10 @@ public interface SearchableList extends TextWatcher
 	 * Force a filter on the text in the layout's {@link android.widget.EditText EditText} "search view".
 	 */
 	public void forceFilter();
+	
+	/**
+	 * Check to see if the search box is active and in search mode.
+	 * @return True if in search mode, false if not.
+	 */
+	public boolean isInSearchMode();
 }
