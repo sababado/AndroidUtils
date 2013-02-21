@@ -280,7 +280,7 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 	{
 		try
 		{
-			if (listData.size() > 0 && listData.get(0) != null)
+			if (listData != null && listData.size() > 0 && listData.get(0) != null)
 			{
 				// make sure data is Serializable
 				if (!(listData.get(0) instanceof Serializable))

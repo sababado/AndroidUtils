@@ -39,6 +39,7 @@ import com.sababado.content.SearchableList;
  */
 public abstract class FilterableBaseAdapter extends BaseAdapter implements Filterable
 {
+	private static final String TAG = "FilterableBaseAdapter";
 	//This adapter's filter.
 	private GenericLists<?>.ListFilter filter;
 	// Object to hold the list data.
@@ -141,7 +142,11 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 */
 	public <T> void setListData(List<T> listData)
 	{
-		mGenericLists = new GenericLists<T>(listData);
+		Log.v(TAG, "listData: "+(listData == null));
+		if(listData == null)
+			mGenericLists = null;
+		else
+			mGenericLists = new GenericLists<T>(listData);
 	}
 	
 	/**
