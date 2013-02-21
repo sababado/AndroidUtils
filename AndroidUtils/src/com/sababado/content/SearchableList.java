@@ -142,6 +142,18 @@ public interface SearchableList extends TextWatcher
 	public boolean toggleSearchTextViewVisibility(boolean clearText);
 	
 	/**
+	 * Hide the search text view
+	 * @param clearText To clear the text before showing or after hiding, this should be true, or to do nothing it should be false.
+	 */
+	public void hideSearchMode(boolean clearText);
+	
+	/**
+	 * Show the search text view
+	 * @param clearText To clear the text before showing or after hiding, this should be true, or to do nothing it should be false.
+	 */
+	public void showSearchMode(boolean clearText);
+	
+	/**
 	 * Force a filter on the text in the layout's {@link android.widget.EditText EditText} "search view".
 	 */
 	public void forceFilter();

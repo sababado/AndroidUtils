@@ -418,6 +418,23 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 			return false;
 		}
 	}
+	
+	@Override
+	public void hideSearchMode(boolean clearText) {
+		UtilDevice.hideKeyboard(getActivity(), mSearchView);
+		mSearchView.setVisibility(View.GONE);
+		if (clearText)
+			mSearchView.setText("");
+	}
+
+	@Override
+	public void showSearchMode(boolean clearText) {
+		if (clearText)
+			mSearchView.setText("");
+		mSearchView.setVisibility(View.VISIBLE);
+		mSearchView.requestFocus();
+		UtilDevice.showKeyboard(getActivity(), mSearchView);
+	}
 
 	@Override
 	public void forceFilter()
