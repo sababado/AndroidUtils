@@ -16,12 +16,12 @@
 
 package com.sababado.content;
 
-import java.util.List;
-
-import com.sababado.widget.FilterableBaseAdapter;
+import java.util.ArrayList;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+
+import com.sababado.widget.FilterableBaseAdapter;
 
 /**
  * This interface defines what a searchable {@link android.app.ListActivity ListActivity} or {@link android.app.ListFragment ListFragment} should consist of.
@@ -48,14 +48,21 @@ public interface SearchableList extends TextWatcher
 	 * @param listData
 	 *            The data to show in the list
 	 */
-	public <T> void setListData(List<T> listData);
+	public <T> void setListData(ArrayList<T> listData);
 
 	/**
 	 * Returns the list data managed by this object.
 	 * 
 	 * @return listData managed list data.
 	 */
-	public List<?> getListData();
+	public ArrayList<?> getListData();
+	
+	/**
+	 * Returns the saved list data
+	 * <b>The cached data is cleared immediately when this is called in order to reduce a memory footprint</b>
+	 * @return saved list data
+	 */
+	public ArrayList<?> getSavedListData();
 	
 	/**
 	 * A filtered list of data is returned. This list does not have any relation to
@@ -64,7 +71,7 @@ public interface SearchableList extends TextWatcher
 	 * 
 	 * @return Filtered listData
 	 */
-	public List<?> getFilteredListData();
+	public ArrayList<?> getFilteredListData();
 
 	/**
 	 * Set the text of the searchable {@link android.widget.EditText EditText}

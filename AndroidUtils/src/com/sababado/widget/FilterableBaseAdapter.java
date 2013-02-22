@@ -19,8 +19,8 @@ package com.sababado.widget;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +39,7 @@ import com.sababado.content.SearchableList;
  */
 public abstract class FilterableBaseAdapter extends BaseAdapter implements Filterable
 {
+	private static final String TAG = "FilterableBaseAdapter";
 	//This adapter's filter.
 	private GenericLists<?>.ListFilter filter;
 	// Object to hold the list data.
@@ -51,7 +52,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 * @param searchableListFragment Reference to the {@link SearchableList} fragment/activity.
 	 * @param listData The data to show in the list and filter.
 	 */
-	public <T> FilterableBaseAdapter(SearchableList searchableListFragment, List<T> listData)
+	public <T> FilterableBaseAdapter(SearchableList searchableListFragment, ArrayList<T> listData)
 	{
 		mSearchableList = searchableListFragment;
 		
@@ -62,7 +63,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 			{
 				// make sure data is Serializable
 				if (!(listData.get(0) instanceof Serializable))
-					throw new RuntimeException("Exception in Searchable List: List data must be of a Serializable type.");
+					Log.w(TAG, "In order to save list state the list data should be of Parcelable type");
 			}
 			mGenericLists = new GenericLists<T>(listData);
 		}
@@ -118,28 +119,21 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	/**
 	 * This should be called in order to reduce the memory footprint of the
 	 * lists before the {@link android.app.Fragment Fragment}'s state saves
+	 * 
+	 * @return This returns a parcelable list or null if the data is not parcelable.
 	 */
-	public Serializable saveInstanceState()
+	public ArrayList<? extends Parcelable> saveInstanceState()
 	{
-		mGenericLists.saveInstanceState();
-		return mGenericLists;
-	}
-
-	/**
-	 * This should be called after this object is restored from the
-	 * {@link android.app.Fragment Fragment} resume.
-	 */
-	public void restoreState(Serializable savedState)
-	{
-		mGenericLists = (GenericLists<?>)savedState;
-		mGenericLists.restoreState();
+		if(mGenericLists == null)
+			return null;
+		return mGenericLists.saveInstanceState();
 	}
 	
 	/**
 	 * Alter the data set of this list. Be sure to call {@link #notifyDataSetChanged()} after this to refresh the list.
 	 * @param listData
 	 */
-	public <T> void setListData(List<T> listData)
+	public <T> void setListData(ArrayList<T> listData)
 	{
 		if(listData == null)
 			mGenericLists = null;
@@ -151,7 +145,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 * Get the Original list data managed by this adapter
 	 * @return
 	 */
-	public List<?> getListData()
+	public ArrayList<?> getListData()
 	{
 		if(mGenericLists == null)
 			return null;
@@ -162,7 +156,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 * Get the Filtered list data managed by this adapter.
 	 * @return
 	 */
-	public List<?> getFilteredListData()
+	public ArrayList<?> getFilteredListData()
 	{
 		return mGenericLists.mFilteredListData;
 	}
@@ -175,7 +169,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	 * @param constraint Non null string to filter the data by.
 	 * @return The filtered List. Return <code>null</code> signify an empty filtered list.
 	 */
-	public abstract List<?> performFiltering(List<?> listData, CharSequence constraint);
+	public abstract ArrayList<?> performFiltering(ArrayList<?> listData, CharSequence constraint);
 	
 	/**
 	 * Wrapper around the lists so that the lists can be generic.
@@ -193,17 +187,17 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 		/**
 		 * The original data list.
 		 */
-		List<T> mListData;
+		ArrayList<T> mListData;
 		/**
 		 * The filtered data list
 		 */
-		List<T> mFilteredListData;
+		ArrayList<T> mFilteredListData;
 
 		/**
 		 * Create a new object with a given list of data. This data is set as the base list.
 		 * @param listData Data to use.
 		 */
-		public GenericLists(List<T> listData)
+		public GenericLists(ArrayList<T> listData)
 		{
 			mListData = listData;
 			mFilteredListData = new ArrayList<T>();
@@ -214,22 +208,19 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 		 * This should be called in order to reduce the memory footprint of the
 		 * lists before the {@link android.app.Fragment Fragment}'s state saves
 		 * 
-		 * @return Return's {@link FilterableBaseAdapter this} object for convenience.
+		 * @return Return's {@link Parcelable} object of the list, or null if the list type isn't parcelable
 		 */
-		public GenericLists<T> saveInstanceState()
+		@SuppressWarnings("unchecked")
+		public ArrayList<? extends Parcelable> saveInstanceState()
 		{
 			mFilteredListData = null;
-			return this;
-		}
-
-		/**
-		 * This should be called after this object is restored from the
-		 * {@link android.app.Fragment Fragment}'s resume.
-		 */
-		public void restoreState()
-		{
-			mFilteredListData = new ArrayList<T>();
-			mFilteredListData.addAll(mListData);
+			if(mListData == null)
+				return null;
+			
+			if(mListData.size() == 0 || mListData.get(0) instanceof Parcelable)
+				return (ArrayList<? extends Parcelable>) mListData;
+			
+			return null;
 		}
 
 		/**
@@ -261,8 +252,8 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 				if (constraint != null && constraint.toString().length() > 0)
 				{
 					//Prevent aliasing to ruin this data array
-					List<T> dataCopy = new ArrayList<T>(mListData);
-					List<?> filt = FilterableBaseAdapter.this.performFiltering(dataCopy, constraint);
+					ArrayList<T> dataCopy = new ArrayList<T>(mListData);
+					ArrayList<?> filt = FilterableBaseAdapter.this.performFiltering(dataCopy, constraint);
 					if(filt == null) //empty list
 						filt = new ArrayList<T>();
 					retval.count = filt.size();
@@ -275,9 +266,12 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results)
 			{
-				mFilteredListData.clear();
+				if(mFilteredListData == null)
+					mFilteredListData = new ArrayList<T>();
+				else
+					mFilteredListData.clear();
 
-				List<T> resultsValues = (List<T>) results.values;
+				ArrayList<T> resultsValues = (ArrayList<T>) results.values;
 				
 				//build a boolean to say if the list is empty or not
 				boolean isEmpty = resultsValues == null || resultsValues.size() < 1;

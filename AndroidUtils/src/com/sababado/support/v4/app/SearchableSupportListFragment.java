@@ -17,9 +17,10 @@
 package com.sababado.support.v4.app;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.view.KeyEvent;
@@ -116,7 +117,23 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	 * Used only in the case that a custom adapter isn't used.
 	 * This is a "cache" to help loading from state changes.
 	 */
-	private List<?> mListData;
+	private ArrayList<?> mListData;
+	
+	/**
+	 * Used only if there is list data that is saved by onSavedInstanceState
+	 */
+	private ArrayList<?> mSavedListData;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		//check for saved list
+		if(savedInstanceState != null)
+		{
+			mSavedListData =  savedInstanceState.getParcelableArrayList("list");
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -178,6 +195,13 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 		//Save the search view's text and visibility
 		outState.putInt("search_visibility", mSearchView.getVisibility());
 		outState.putString("search_text", mSearchView.getText().toString());
+		//If custom adapter, save state.
+		if(mFilterableAdapter != null)
+		{
+			ArrayList<? extends Parcelable> list = mFilterableAdapter.saveInstanceState();
+			if(list != null)
+				outState.putParcelableArrayList("list", list);
+		}
 	}
 
 	@Override
@@ -223,6 +247,7 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	 * saved when orientation changes. This method has been overridden to always set false.
 	 */
 	@Override
+	@Deprecated
 	public final void setRetainInstance(boolean retain) {
 		super.setRetainInstance(false);
 	}
@@ -274,7 +299,7 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	}
 
 	@Override
-	public <T> void setListData(List<T> listData)
+	public <T> void setListData(ArrayList<T> listData)
 	{
 		try
 		{
@@ -299,7 +324,7 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	}
 
 	@Override
-	public List<?> getListData()
+	public ArrayList<?> getListData()
 	{
 		if(mFilterableAdapter != null)
 			return  mFilterableAdapter.getListData();
@@ -309,7 +334,15 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	}
 	
 	@Override
-	public List<?> getFilteredListData()
+	public ArrayList<?> getSavedListData()
+	{
+		ArrayList<?> data = mSavedListData;
+		mSavedListData = null;
+		return data;
+	}
+	
+	@Override
+	public ArrayList<?> getFilteredListData()
 	{
 		if(mFilterableAdapter == null)
 			throw new RuntimeException("getFilteredListData() can only be used when using a FilterableBaseAdapter");
