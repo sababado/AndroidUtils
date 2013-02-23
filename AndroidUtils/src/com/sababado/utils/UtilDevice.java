@@ -166,4 +166,17 @@ public class UtilDevice
 	public static void unlockOrientation(Activity activity) {
 	    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 	}
+	
+	/**
+	 * Get the string representation of the orientation given a context.
+	 * @param ctx {@link Context} to get the orientation of.
+	 * @return <code>"portrait"</code> for {@link Configuration#ORIENTATION_PORTRAIT} or <code>"landscape"</code> for {@link Configuration#ORIENTATION_LANDSCAPE}.
+	 */
+	public static String getOrientationAsString(Context ctx)
+	{
+		if(ctx.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+			return "portrait";
+		else
+			return "landscape";
+	}
 }
