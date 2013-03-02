@@ -17,7 +17,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/menu_search" android:title="@string/menu_search_title"
-        android:icon="@android:drawable/ic_menu_search" android:showAsAction="ifRoom"></item>
+        android:icon="@drawable/ic_menu_search" android:showAsAction="ifRoom"></item>
     
 
 </menu>
