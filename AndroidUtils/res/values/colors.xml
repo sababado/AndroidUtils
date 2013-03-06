@@ -23,6 +23,7 @@
     <color name="light_gray">#CCC</color>
     <color name="light_light_gray">#EEE</color>
     <color name="dark_gray">#888</color>
+    <color name="gray_opaque">#44FCFCFC</color>
     
     <!-- RED -->
     <color name="red">#991816</color>

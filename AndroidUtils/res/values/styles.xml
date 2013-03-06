@@ -33,4 +33,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
     </style>
+    
+    <style name="msgTxt_light_forRelativeLayouts" parent="msgTxt_forRelativeLayouts">
+        <item name="android:background">@color/gray_opaque</item>
+    </style>
 </resources>
