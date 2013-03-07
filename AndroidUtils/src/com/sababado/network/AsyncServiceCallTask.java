@@ -275,7 +275,8 @@ public class AsyncServiceCallTask extends AsyncTask<Void, String, Bundle>
 		{
 			//max number of attempts exceeded, error
 			Bundle responseBundle = new Bundle();
-			responseBundle.putString(EXTRA_ERR_MSG, "Failed "+MAX_ATTEMPTS+" attempts, please retry later.");
+			//responseBundle.putString(EXTRA_ERR_MSG, "Failed "+MAX_ATTEMPTS+" attempts, please retry later.");
+			responseBundle.putString(EXTRA_ERR_MSG, "Could not connect to the server, please try again later");
 			responseBundle.putInt(EXTRA_ERR_CODE, ERR_CODE_MAX_ATTEMPTS_REACHED);
 			return responseBundle;
 		}

@@ -25,4 +25,7 @@
     <string name="menu_search_title">Search</string>
     <!-- END -->
     
+    <!-- Generic Network Errors -->
+    <string name="error_server_down">Sorry, the server is responding right now. Please try again later.</string>
+    
 </resources>

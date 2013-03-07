@@ -16,7 +16,10 @@
 
 package com.sababado.utils;
 
+import com.sababado.androidutils.R;
+
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -39,5 +42,21 @@ public class UtilNetwork
 	          = (ConnectivityManager) (context.getSystemService(Context.CONNECTIVITY_SERVICE));
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null;
+	}
+	
+	/**
+	 * Get a generic error message based on different http response codes.
+	 * @param context Context in which to access resources by
+	 * @param errCode Error code to return a message for
+	 * @return An error message is returned for a given error code.
+	 */
+	public static String getErrorMessage(Context context, int errCode)
+	{
+		Resources r = context.getResources();
+		if(errCode == 504)
+		{
+			return r.getString(R.string.error_server_down);
+		}
+		return null;
 	}
 }
