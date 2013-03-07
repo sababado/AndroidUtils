@@ -259,7 +259,7 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 	{
 		// Make sure the adapter exists
 		ListAdapter adapter = getListView().getAdapter();
-		if (mSearchView.getVisibility() != View.VISIBLE || adapter == null || s == null)
+		if (adapter == null || s == null)
 			return;
 		//if adapter is filterable type then call ontextchanged
 		if(adapter instanceof Filterable)
@@ -447,7 +447,10 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 			UtilDevice.hideKeyboard(getActivity(), mSearchView);
 			mSearchView.setVisibility(View.GONE);
 			if (clearText)
+			{
 				mSearchView.setText("");
+				forceFilter();
+			}
 			return false;
 		}
 	}
@@ -457,7 +460,10 @@ public class SearchableListFragment extends ListFragment implements SearchableLi
 		UtilDevice.hideKeyboard(getActivity(), mSearchView);
 		mSearchView.setVisibility(View.GONE);
 		if (clearText)
+		{
 			mSearchView.setText("");
+			forceFilter();
+		}
 	}
 
 	@Override

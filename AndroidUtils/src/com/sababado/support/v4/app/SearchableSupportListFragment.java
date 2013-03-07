@@ -257,7 +257,7 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	{
 		// Make sure the adapter exists
 		ListAdapter adapter = getListView().getAdapter();
-		if (mSearchView.getVisibility() != View.VISIBLE || adapter == null || s == null)
+		if (adapter == null || s == null)
 			return;
 		//if adapter is filterable type then call ontextchanged
 		if(adapter instanceof Filterable)
@@ -445,7 +445,10 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 			UtilDevice.hideKeyboard(getActivity(), mSearchView);
 			mSearchView.setVisibility(View.GONE);
 			if (clearText)
+			{
 				mSearchView.setText("");
+				forceFilter();
+			}
 			return false;
 		}
 	}
@@ -455,7 +458,10 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 		UtilDevice.hideKeyboard(getActivity(), mSearchView);
 		mSearchView.setVisibility(View.GONE);
 		if (clearText)
+		{
 			mSearchView.setText("");
+			forceFilter();
+		}
 	}
 
 	@Override

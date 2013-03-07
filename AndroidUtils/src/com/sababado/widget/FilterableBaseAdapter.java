@@ -111,6 +111,8 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 	@Override
 	public Filter getFilter()
 	{
+		if(mGenericLists == null)
+			return null;
 		if (filter == null)
 			filter = mGenericLists.getListFilter();
 		return filter;
@@ -307,11 +309,9 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 					}
 				} //end if empty check
 
-				notifyDataSetChanged();
-
 				for (T t : resultsValues)
 					mFilteredListData.add(t);
-				notifyDataSetInvalidated();
+				notifyDataSetChanged();
 			}
 		}
 	}
