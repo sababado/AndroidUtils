@@ -256,8 +256,8 @@ public class SearchableSupportListFragment extends ListFragment implements Searc
 	public void onTextChanged(CharSequence s)
 	{
 		// Make sure the adapter exists
-		ListAdapter adapter = getListView().getAdapter();
-		if (adapter == null || s == null)
+		ListAdapter adapter;
+		if (getListView() == null || (adapter=getListView().getAdapter()) == null || s == null)
 			return;
 		//if adapter is filterable type then call ontextchanged
 		if(adapter instanceof Filterable)

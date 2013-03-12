@@ -268,6 +268,8 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 			@Override
 			protected void publishResults(CharSequence constraint, FilterResults results)
 			{
+				Log.v(TAG, "constraint: "+constraint );
+				Log.v(TAG, "mFilteredListData is null? "+(mFilteredListData == null));
 				if(mFilteredListData == null)
 					mFilteredListData = new ArrayList<T>();
 				else
@@ -277,6 +279,7 @@ public abstract class FilterableBaseAdapter extends BaseAdapter implements Filte
 				
 				//build a boolean to say if the list is empty or not
 				boolean isEmpty = resultsValues == null || resultsValues.size() < 1;
+				Log.v(TAG, "size: "+( isEmpty ? 0 : resultsValues.size()));
 
 				if(isEmpty)
 				{
